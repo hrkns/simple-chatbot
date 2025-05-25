@@ -162,10 +162,10 @@ Railway will detect the Dockerfile automatically.
 
 1. **Create project → "Deploy from GitHub" → pick this repo.**
 2. **Environment Variables**: add `OPENAI_API_KEY` (and optionally `CONFIG_PATH`).
-3. **First deploy** builds the image and boots FastAPI – but the vector store is empty.  Open the Railway "Shell" tab and run:
+3. **First deploy** builds the image and boots FastAPI – but the vector store is empty. Using the [Railway Shell](https://docs.railway.com/guides/cli#local-shell) run:
 
    ```bash
-   python ingest.py
+   python api/ingest.py
    ```
 
    This populates `/app/db`.  Restart the container and you’re done.
