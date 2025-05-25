@@ -3,19 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Promtior Chatbot</title>
+    <title data-bind="title">Simple Chatbot</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main>
-      <h1>Ask me about Promtior</h1>
+      <h1 data-bind="heading">Simple Chatbot</h1>
       <form id="form" class="chat-form">
         <input
           id="q"
           type="text"
-          placeholder='Try: "What services does Promtior offer?"'
+          placeholder="Tell me something..."
           autocomplete="off"
           required
+          data-bind="placeholder"
         />
         <button type="submit">Send</button>
       </form>
