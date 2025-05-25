@@ -59,7 +59,6 @@ flowchart TB
 ```
 .
 ├── api/                    ← Backend service (FastAPI + LangChain)
-│   ├── Dockerfile          ← Container recipe – Railway autodetects it
 │   ├── ingest.py           ← One‑off script to build/refresh the vector DB
 │   ├── main.py             ← Starts LangServe, mounts the UI and guard‑rails
 │   ├── config.json         ← All tunables (models, sources, allow‑list…)
@@ -72,7 +71,8 @@ flowchart TB
 │   ├── app.js              ← Fetch wrapper + loading dots UX
 │   └── config.json         ← Text labels that appear in the UI
 ├── .gitignore              ← Ignore secrets, vector DB, byte‑code…
-└── LICENSE                 ← MIT
+├── LICENSE                 ← MIT
+└── Dockerfile              ← Container recipe – Railway autodetects it
 ```
 
 ### Key Files Explained
@@ -80,10 +80,10 @@ flowchart TB
 | File                  | Why it matters                                                                                                                                                               |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`api/config.json`** | Single source of truth for *everything* in the API: crawl URLs, extra docs, allow‑list, model & retriever settings, FastAPI metadata.  Change it → restart the service → new behaviour. |
-| **`ingest.py`**       | Run any time you tweak `source_urls` or want fresh content.  The output (`api/db/`) is a Chroma collection that will be memory‑mapped by `main.py`.                          |
-| **`main.py`**         | Boots FastAPI, wires the guard class, attaches LangServe, and mounts `ui/` as static files at the root path.                                                                 |
+| **`api/ingest.py`**       | Run any time you tweak `source_urls` or want fresh content.  The output (`api/db/`) is a Chroma collection that will be memory‑mapped by `main.py`.                          |
+| **`api/main.py`**         | Boots FastAPI, wires the guard class, attaches LangServe, and mounts `ui/` as static files at the root path.                                                                 |
 | **`ui/app.js`**       | Very small: grabs labels from `/config.json`, handles the form submit, shows "typing…" dots, calls `/chat/invoke` and streams the answer.                                    |
-| **`api/Dockerfile`**  | Sets `WORKDIR /app`, installs deps, copies source, exposes `$PORT`, and launches Uvicorn.  No separate image for the front‑end needed – FastAPI serves it.                   |
+| **`Dockerfile`**  | Sets `WORKDIR /app`, installs deps, copies source, exposes `$PORT`, and launches Uvicorn.  No separate image for the front‑end needed – FastAPI serves it.                   |
 
 ---
 
@@ -143,15 +143,13 @@ The `api/Dockerfile` contains everything (backend + UI):
 
 ```bash
 # Build the image
-docker build -t simple-chatbot ./api
+docker build -t simple-chatbot .
 
 # Ingest on a throw‑away container and copy the DB out
-docker run --rm -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           -v $(pwd)/api/db:/app/db simple-chatbot python ingest.py
+docker run --rm -e OPENAI_API_KEY=$OPENAI_API_KEY -v $(pwd)/api/db:/app/db simple-chatbot python api/ingest.py
 
 # Now run the full service
-docker run -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           -v $(pwd)/api/db:/app/db simple-chatbot
+docker run -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY -v $(pwd)/api/db:/app/db simple-chatbot
 ```
 
 Open [http://localhost:8000](http://localhost:8000).
