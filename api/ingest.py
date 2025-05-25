@@ -12,7 +12,7 @@ from langchain.docstore.document import Document
 # Config utils
 # -----------------------------------------------------------------------------
 def load_config() -> dict:
-    cfg_path = os.getenv("CONFIG_PATH") or Path(__file__).parent.parent / "config.json"
+    cfg_path = os.getenv("CONFIG_PATH") or Path(__file__).parent / "config.json"
     with open(cfg_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
