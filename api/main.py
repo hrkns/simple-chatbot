@@ -68,11 +68,12 @@ def build_chain():
     class Allowlist(Runnable):
         def invoke(self, inputs, config=None):
             question = inputs["question"].strip().lower()
+            canonical = most_similar_allowed(question)
             if not most_similar_allowed(question):
                 return {"answer": config_root["refusal_text"]}
             return rag_chain.invoke(
                 {
-                    "question": question,
+                    "question": canonical,
                     "chat_history": inputs.get("chat_history", []),
                 },
                 config=config,
