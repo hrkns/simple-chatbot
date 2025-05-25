@@ -1,37 +1,39 @@
 {
-  "api": {
-    "source_urls": [
-      "https://www.promtior.ai/service",
-      "https://pitchbook.com/profiles/company/596562-22",
-      "https://clutch.co/profile/promtior"
-    ],
-    "loader_timeout": [60, 60],
-    "extra_documents": [
-      {
-        "page_content": "Promtior was founded in 2023.",
-        "metadata": { "source": "manual-note" }
-      }
-    ],
-    "canonical_allowed": {
-      "what services does the company offer?": "services",
-      "what services does promtior offer?": "services",
-      "when was the company founded?": "founded",
-      "when was promtior founded?": "founded"
-    },
-    "refusal_text": "I’m sorry – I can only answer questions about Promtior’s services or its founding year.",
-    "threshold": 0.85,
-    "llm": {
-      "model": "gpt-4o-mini",
-      "temperature": 0
-    },
-    "retriever": {
-      "search_type": "similarity",
-      "k": 4
-    },
-    "fastapi": {
-      "title": "Promtior Two-Question Assistant",
-      "version": "0.1.0",
-      "description": "RAG chatbot with semantic allow-list matching."
+  "source_urls": [
+    "https://www.promtior.ai/service",
+    "https://pitchbook.com/profiles/company/596562-22",
+    "https://clutch.co/profile/promtior"
+  ],
+  "loader_timeout": [60, 60],
+
+  "extra_documents": [
+    {
+      "page_content": "Promtior was founded in 2023.",
+      "metadata": { "source": "manual-note" }
     }
+  ],
+
+  "canonical_allowed": {
+    "what services does the company offer?": "services",
+    "what services does promtior offer?": "services",
+    "when was the company founded?": "founded",
+    "when was promtior founded?": "founded"
+  },
+  "refusal_text": "I’m sorry – I can only answer questions about Promtior’s services or its founding year.",
+  "threshold": 0.85,
+
+  "llm": {
+    "model": "gpt-4o-mini",
+    "temperature": 0
+  },
+  "retriever": {
+    "search_type": "similarity",
+    "k": 4
+  },
+
+  "fastapi": {
+    "title": "Promtior Two-Question Assistant",
+    "version": "0.1.0",
+    "description": "RAG chatbot with semantic allow-list matching."
   }
 }
