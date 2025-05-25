@@ -26,7 +26,7 @@
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **RAG Pipeline**         | Web pages are scraped, chunked, embedded with OpenAI embeddings and stored in a local Chroma vector DB.                                         |
 | **LangServe API**        | `POST /chat/invoke` returns streaming or JSON answers.  Mounted under FastAPI for easy extension.                                               |
-| **Strict Allow‑List**    | A semantic similarity check (cosine > `threshold`) ensures the bot only answers whitelisted questions; everything else yields a polite refusal. |
+| **Strict Allow‑List**    | A semantic similarity check (cosine > `threshold`) ensures the bot only answers allowlisted questions; everything else yields a polite refusal. |
 | **Zero‑build Front‑end** | Vanilla HTML + CSS + JS placed in `ui/` and served by FastAPI – no framework or bundler required.                                               |
 | **12‑Factor Ready**      | All secrets and tunables live in `.env` or `config.json`.  The container reads `PORT` so it Just Works™ on Railway and most PaaS providers.     |
 
@@ -136,7 +136,7 @@ python api/ingest.py  # grabs pages, embeds, persists under api/db/
 uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Visit **[http://localhost:8000](http://localhost:8000)** – the chat UI loads and you can ask the whitelisted questions.
+Visit **[http://localhost:8000](http://localhost:8000)** – the chat UI loads and you can ask the allowlisted questions.
 
 ---
 
