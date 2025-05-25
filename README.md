@@ -64,10 +64,10 @@ flowchart TB
 │   ├── config.json         ← All tunables (models, sources, allow‑list…)
 │   ├── requirements.txt    ← Python deps
 │   ├── .env.sample         ← Example env-vars (OPENAI_API_KEY, etc.)
-│   └── db/                 ← ★ Pre-built Chroma vector DB (checked into Git)
-│       ├── chroma-collections.parquet
-│       ├── chroma-embeddings.parquet
-│       └── …               (small < 5 MB, loaded at runtime – no rebuild needed)
+│── db/                     ← ★ Pre-built Chroma vector DB (checked into Git)
+│   ├── chroma-collections.parquet
+│   ├── chroma-embeddings.parquet
+│   └── …                   (small < 5 MB, loaded at runtime – no rebuild needed)
 ├── ui/                     ← Static front‑end assets
 │   ├── index.html          ← Plain chat UI
 │   ├── style.css           ← Minimal styling
