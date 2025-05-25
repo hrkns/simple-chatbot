@@ -20,7 +20,7 @@ ENV_PATH = Path(__file__).parent / ".env"
 if ENV_PATH.is_file():
     load_dotenv(ENV_PATH)
 
-config = load_config()
+config = load_config()["api"]
 
 # -----------------------------------------------------------------------------
 # Ingestion
