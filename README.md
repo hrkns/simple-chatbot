@@ -2,7 +2,7 @@
 
 *A minimal Retrieval‑Augmented Generation (RAG) demo built with **LangChain**, **LangServe**, and **FastAPI**.  The project shows how to gate the assistant to a strict set of questions and answer them with up‑to‑date information gathered from the web.*
 
-> **Why the name?**  The repo was designed as an interview exercise.  It ships with a pre‑configured knowledge base about the company **Promtior** so you can ask, for example, "What services does Promtior offer?". Swap the data set and the allow‑list and you get a brand‑new specialised bot.
+> **Why the name?**  The repo was designed as an interview exercise.  It ships with a pre‑configured knowledge base about the company **Promtior** so you can ask, for example, "What services does Promtior offer?". Swap the data set and the allow‑list and you get a brand‑new specialised bot.
 
 ---
 
@@ -20,19 +20,19 @@
 
 ---
 
-### Features
+## Features
 
 | Capability               | Detail                                                                                                                                          |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **RAG Pipeline**         | Web pages are scraped, chunked, embedded with OpenAI embeddings and stored in a local Chroma vector DB.                                         |
 | **LangServe API**        | `POST /chat/invoke` returns streaming or JSON answers.  Mounted under FastAPI for easy extension.                                               |
-| **Strict Allow‑List**    | A semantic similarity check (cosine > `threshold`) ensures the bot only answers whitelisted questions; everything else yields a polite refusal. |
+| **Strict Allow‑List**    | A semantic similarity check (cosine > `threshold`) ensures the bot only answers whitelisted questions; everything else yields a polite refusal. |
 | **Zero‑build Front‑end** | Vanilla HTML + CSS + JS placed in `ui/` and served by FastAPI – no framework or bundler required.                                               |
 | **12‑Factor Ready**      | All secrets and tunables live in `.env` or `config.json`.  The container reads `PORT` so it Just Works™ on Railway and most PaaS providers.     |
 
 ---
 
-### Architecture
+## Architecture
 
 ```mermaid
 flowchart TB
@@ -48,13 +48,13 @@ flowchart TB
   end
 ```
 
-1. **Ingestion** (`ingest.py`) pulls external pages plus any manual snippets, splits them, embeds them and persists a CHROMA collection in `api/db/`.
+1. **Ingestion** (`ingest.py`) pulls external pages plus any manual snippets, splits them, embeds them and persists a CHROMA collection in `api/db/`.
 2. **Allow‑List Guard** computes the cosine similarity between the user’s question and pre‑embedded canonical phrasings.  If the best match is below the configured `threshold`, the request is short‑circuited.
 3. **ConversationalRetrievalChain** adds the top‑k relevant chunks as context and queries the LLM.  LangServe wraps the chain and exposes `/chat/invoke`.
 
 ---
 
-### Project Layout
+## Project Layout
 
 ```
 .
@@ -75,7 +75,7 @@ flowchart TB
 └── LICENSE                 ← MIT
 ```
 
-### Key Files Explained
+### Key Files Explained
 
 | File                  | Why it matters                                                                                                                                                               |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -87,7 +87,7 @@ flowchart TB
 
 ---
 
-### Prerequisites
+## Prerequisites
 
 | Tool               | Minimum Version | Purpose                                     |
 | ------------------ | --------------- | ------------------------------------------- |
@@ -98,36 +98,36 @@ flowchart TB
 
 ---
 
-## Running Locally
+## Running Locally
 
-### 1 – Clone & enter the repo
+### 1 – Clone & enter the repo
 
 ```bash
 git clone https://github.com/hrkns/simple-chatbot.git
 cd simple-chatbot
 ```
 
-### 2 – Create `.env`
+### 2 – Create `.env`
 
 ```bash
 cp api/.env.sample api/.env
 # Then open api/.env and paste your real OPENAI_API_KEY
 ```
 
-### 3 – Install Dependencies
+### 3 – Install Dependencies
 
 ```bash
 pip install -r api/requirements.txt
 ```
 
-### 4 – Build/Refresh the Vector DB
+### 4 – Build/Refresh the Vector DB
 
 ```bash
 python api/ingest.py  # grabs pages, embeds, persists under api/db/
 # When re-reunning this command during development and local testing, sometimes it's useful to remove any existing 'db' folder first
 ```
 
-### 5 – Run the API
+### 5 – Run the API
 
 ```bash
 uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
@@ -137,7 +137,7 @@ Visit **[http://localhost:8000](http://localhost:8000)** – the chat UI loads a
 
 ---
 
-## Running with Docker
+## Running with Docker
 
 The `api/Dockerfile` contains everything (backend + UI):
 
@@ -158,7 +158,7 @@ Open [http://localhost:8000](http://localhost:8000).
 
 ---
 
-## Deploying on Railway
+## Deploying on Railway
 
 Railway will detect the Dockerfile automatically.
 
@@ -183,7 +183,7 @@ https://simple-chatbot-production.up.railway.app
 
 ---
 
-## Customising the Bot
+## Customising the Bot
 
 | Task                    | Where to Change                                                     | Then…                                                   |
 | ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------------- |
@@ -194,12 +194,12 @@ https://simple-chatbot-production.up.railway.app
 
 ---
 
-## License
+## License
 
 This project is released under the MIT License – see [LICENSE](LICENSE).
 
 ---
 
-### Enjoy building!
+## Enjoy building!
 
 Feel free to open issues or pull requests if you spot anything odd or have improvement ideas.
