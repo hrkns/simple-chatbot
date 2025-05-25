@@ -1,3 +1,2 @@
 api/.env
-**/db
 **/__pycache__
