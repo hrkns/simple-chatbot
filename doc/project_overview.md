@@ -78,3 +78,7 @@ Anything outside those scopes must be politely refused.
 ## 7 · Time Spent
 
 A focused **week-end sprint (~2 days)** from blank repo to live prototype, including local iteration, debugging, and Railway deployment.
+
+## 8 · Components diagram
+
+You can check the chatbot components diagram [here](components_diagram.svg) and download an editable file for Diagrams.net [here](components_diagram.drawio).
